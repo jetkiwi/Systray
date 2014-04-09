@@ -8,11 +8,10 @@ public class App {
 
     public static void main(String[] args) {
         SysTray.getInstance().init();
-        
         Stream s = Stream.getInstance();
-        if(s!=null){
+        if (Config.isAuthNotNull()) {
             s.init();
         }
     }
-    
+
 }

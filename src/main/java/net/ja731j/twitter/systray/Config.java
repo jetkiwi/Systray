@@ -6,10 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.ja731j.twitter.systray.event.AuthenticationEvent;
+import net.ja731j.twitter.systray.event.AuthenticationEventListener;
 import org.yaml.snakeyaml.Yaml;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.Configuration;
@@ -24,6 +28,7 @@ public class Config {
     private static Config instance = null;
     private final Configuration config;
     private boolean accessTokenNotNull = true;
+    private static List<AuthenticationEventListener> authenticationListeners = new ArrayList<>();
 
     private Config() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -55,7 +60,7 @@ public class Config {
         String accessTokenSecret = accessMap.get("accessTokenSecret");
         String consumerKey = consumerMap.get("key");
         String consumerSecret = consumerMap.get("secret");
-
+        
         if (accessToken == null || accessTokenSecret == null) {
             accessTokenNotNull = false;
         }
@@ -67,17 +72,18 @@ public class Config {
     }
 
     public static boolean isAuthNotNull() {
+        return getInstance().accessTokenNotNull;
+    }
+    
+    private static Config getInstance(){
         if (instance == null) {
             instance = new Config();
         }
-        return instance.accessTokenNotNull;
+        return instance;
     }
 
     public static Configuration getConfiguration() {
-        if (instance == null) {
-            instance = new Config();
-        }
-        return instance.config;
+        return getInstance().config;
     }
 
     public static void updateConfiguraiton(AccessToken token) {
@@ -94,6 +100,21 @@ public class Config {
         }
         
         instance = new Config();
+        authenticatedEvent(instance);
 
+    }
+    
+    public static void addAuthenticationEventListener(AuthenticationEventListener listener){
+        authenticationListeners.add(listener);
+    }
+    
+    public static void removeAuthenticationEventListener(AuthenticationEventListener listener){
+        authenticationListeners.remove(listener);
+    }
+    
+    private static void authenticatedEvent(Config cfg){
+        for(AuthenticationEventListener listener:authenticationListeners){
+            listener.onAuthentication(new AuthenticationEvent(cfg));
+        }
     }
 }
