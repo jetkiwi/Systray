@@ -2,7 +2,6 @@ package net.ja731j.twitter.systray.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import net.ja731j.twitter.systray.Stream;
 import net.ja731j.twitter.systray.SysTray;
 
 /**
@@ -13,11 +12,7 @@ public class QuitListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        SysTray.getInstance().quit();
-        Stream s = Stream.getInstance();
-        if(s!=null){
-            s.quit();
-        }
+        SysTray.getInstance().exit();
     }
     
 }

@@ -17,6 +17,8 @@ import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import net.ja731j.twitter.systray.Config;
+import net.ja731j.twitter.systray.SysTray;
+import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -25,12 +27,14 @@ import twitter4j.TwitterFactory;
  *
  * @author ja731j <jetkiwi@gmail.com>
  */
-public class PostWindow extends JFrame implements ActionListener {
+public class PostWindow extends JFrame implements ActionListener,ExitEventListener {
 
     private JLabel message;
     private JTextArea area;
 
     public PostWindow() {
+        SysTray.getInstance().addExitListener(this);
+        
         this.setSize(new Dimension(300, 200));
         Point point = MouseInfo.getPointerInfo().getLocation();
         point.translate(-300, -200);
@@ -83,6 +87,11 @@ public class PostWindow extends JFrame implements ActionListener {
         } catch (TwitterException ex) {
             Logger.getLogger(PostWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void onApplicationExit() {
+        this.dispose();
     }
 
     private class DocumentListenerImpl implements DocumentListener {

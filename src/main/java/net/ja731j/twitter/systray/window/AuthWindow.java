@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import net.ja731j.twitter.systray.Config;
+import net.ja731j.twitter.systray.SysTray;
+import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.OAuthAuthorization;
@@ -25,13 +27,15 @@ import twitter4j.auth.RequestToken;
  *
  * @author ja731j <jetkiwi@gmail.com>
  */
-public class AuthWindow extends JFrame implements ActionListener {
+public class AuthWindow extends JFrame implements ActionListener,ExitEventListener{
 
     private JTextField field;
     private RequestToken rt;
     private OAuthAuthorization oauth = new OAuthAuthorization(Config.getConfiguration());
 
     public AuthWindow() {
+        SysTray.getInstance().addExitListener(this);
+        
         try {
             rt = oauth.getOAuthRequestToken();
         } catch (TwitterException ex) {
@@ -95,6 +99,11 @@ public class AuthWindow extends JFrame implements ActionListener {
             throw new RuntimeException(ex);
         }
         Config.updateConfiguraiton(accessToken);
+        this.dispose();
+    }
+
+    @Override
+    public void onApplicationExit() {
         this.dispose();
     }
 

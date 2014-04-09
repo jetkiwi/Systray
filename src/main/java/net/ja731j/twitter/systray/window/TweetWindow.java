@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.ja731j.twitter.systray.SysTray;
+import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -22,7 +24,7 @@ import twitter4j.TwitterFactory;
  *
  * @author ja731j <jetkiwi@gmail.com>
  */
-public class TweetWindow extends JFrame {
+public class TweetWindow extends JFrame implements ExitEventListener{
 
     private final JLabel user = new JLabel();
     private final JLabel post = new JLabel();
@@ -32,6 +34,8 @@ public class TweetWindow extends JFrame {
     }
 
     public TweetWindow(Status status) {
+        SysTray.getInstance().addExitListener(this);
+        
         this.status = status;
         user.setText(status.getUser().getScreenName());
         post.setText(status.getText());
@@ -64,6 +68,11 @@ public class TweetWindow extends JFrame {
         buttons.add(favorite);
         
         this.add(buttons);
+    }
+
+    @Override
+    public void onApplicationExit() {
+        this.dispose();
     }
 
     private class RetweetListener implements ActionListener {
