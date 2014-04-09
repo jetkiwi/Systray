@@ -3,3 +3,5 @@
 *.war
 *.ear
 *.class
+local
+.gitattributes

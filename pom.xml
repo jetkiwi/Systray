@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>Systray</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/jetkiwi/Systray</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,6 +42,7 @@
     <build>
         <plugins>
             <plugin>
+                <version>3.1</version>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.7</source>
@@ -52,28 +53,44 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
-                        <!-- ここはこのままでOK -->
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <!-- ここにmain関数のあるクラスを指定。これがManifest.ｍｆに設定されます -->
                             <mainClass>net.ja731j.twitter.systray.App</mainClass>
                         </manifest>
                     </archive>
- 
                 </configuration>
                 <executions>
-                    <!-- ここでpackageのPhaseで実行されるように設定している-->
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- append to the packaging phase. -->
+                        <id>make-assembly</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>single</goal> <!-- goals == mojos -->
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
- 
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <workingDirectory>${basedir}/target</workingDirectory>
+                    <arguments>
+                        <argument>-jar</argument>
+                        <argument>${project.artifactId}.jar</argument>
+                    </arguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>
