@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import net.ja731j.twitter.systray.Config;
 import net.ja731j.twitter.systray.SysTray;
 import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.Status;
@@ -88,7 +89,8 @@ public class TweetWindow extends JFrame implements ExitEventListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            Twitter twitter = TwitterFactory.getSingleton();
+            TwitterFactory f = new TwitterFactory(Config.getConfiguration());
+            Twitter twitter = f.getInstance();
             try {
                 twitter.retweetStatus(status.getId());
             } catch (TwitterException ex) {
@@ -111,7 +113,8 @@ public class TweetWindow extends JFrame implements ExitEventListener{
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            Twitter twitter = TwitterFactory.getSingleton();
+            TwitterFactory f = new TwitterFactory(Config.getConfiguration());
+            Twitter twitter = f.getInstance();
             try {
                 twitter.createFavorite(status.getId());
             } catch (TwitterException ex) {
