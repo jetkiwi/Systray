@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.ja731j.twitter.systray.Config;
 import net.ja731j.twitter.systray.SysTray;
+import net.ja731j.twitter.systray.event.ExitEvent;
 import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -144,7 +145,7 @@ public class TweetWindow extends javax.swing.JFrame implements ExitEventListener
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void onApplicationExit() {
+    public void onApplicationExit(ExitEvent ex) {
         SysTray.getInstance().removeExitListener(this);
         this.dispose();
     }

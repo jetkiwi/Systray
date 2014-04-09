@@ -1,5 +1,6 @@
 package net.ja731j.twitter.systray;
 
+import net.ja731j.twitter.systray.event.ExitEvent;
 import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
@@ -46,7 +47,7 @@ public class Stream implements ExitEventListener {
     }
 
     @Override
-    public void onApplicationExit() {
+    public void onApplicationExit(ExitEvent ex) {
         if (thread != null) {
             twitterStream.shutdown();
             twitterStream = null;

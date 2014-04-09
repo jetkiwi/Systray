@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.ja731j.twitter.systray.Config;
 import net.ja731j.twitter.systray.SysTray;
+import net.ja731j.twitter.systray.event.ExitEvent;
 import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
@@ -53,7 +54,7 @@ public class AuthWindow extends javax.swing.JFrame implements ExitEventListener{
         setTitle("Authorize Systray");
         setMaximumSize(new java.awt.Dimension(300, 200));
         setMinimumSize(new java.awt.Dimension(300, 200));
-        setPreferredSize(new java.awt.Dimension(300, 200));
+        setPreferredSize(new java.awt.Dimension(500, 200));
 
         jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getSize()+2f));
         jLabel1.setText("Authorize Systray");
@@ -84,9 +85,9 @@ public class AuthWindow extends javax.swing.JFrame implements ExitEventListener{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(authUrlField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(authUrlField)
                     .addComponent(jLabel2)
-                    .addComponent(pinField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pinField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -131,7 +132,7 @@ public class AuthWindow extends javax.swing.JFrame implements ExitEventListener{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void onApplicationExit() {
+    public void onApplicationExit(ExitEvent ex) {
         SysTray.getInstance().removeExitListener(this);
         this.dispose();
     }

@@ -13,5 +13,5 @@ import java.util.EventListener;
  * @author ja731j <jetkiwi@gmail.com>
  */
 public interface ExitEventListener extends EventListener{
-    public void onApplicationExit();
+    public void onApplicationExit(ExitEvent e);
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import net.ja731j.twitter.systray.event.ExitEvent;
 import net.ja731j.twitter.systray.event.ExitEventListener;
 import net.ja731j.twitter.systray.window.TweetWindow;
 import twitter4j.Status;
@@ -106,7 +107,7 @@ public class SysTray implements ActionListener {
             new Thread() {
                 @Override
                 public void run() {
-                    listener.onApplicationExit();
+                    listener.onApplicationExit(new ExitEvent(this));
                 }
             }.start();
         }

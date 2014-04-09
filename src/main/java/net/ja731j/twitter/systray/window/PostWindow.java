@@ -6,6 +6,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import net.ja731j.twitter.systray.Config;
 import net.ja731j.twitter.systray.SysTray;
+import net.ja731j.twitter.systray.event.ExitEvent;
 import net.ja731j.twitter.systray.event.ExitEventListener;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -114,7 +115,7 @@ public class PostWindow extends javax.swing.JFrame implements ExitEventListener 
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void onApplicationExit() {
+    public void onApplicationExit(ExitEvent ex) {
         SysTray.getInstance().removeExitListener(this);
         this.dispose();
     }
