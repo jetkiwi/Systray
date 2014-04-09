@@ -5,6 +5,7 @@ import java.awt.PopupMenu;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import net.ja731j.twitter.systray.menu.AuthListener;
 import net.ja731j.twitter.systray.menu.PostListener;
 import net.ja731j.twitter.systray.menu.QuitListener;
 
@@ -32,7 +33,10 @@ public class Menu {
             menuPost.setEnabled(false);
         }
         
-        this.add(menuPost, menuQuit);
+        MenuItem menuAuth = new MenuItem("Authorize");
+        menuAuth.addActionListener(new AuthListener());
+        
+        this.add(menuPost,menuAuth, menuQuit);
         
         for (MenuItem item : items) {
             menu.add(item);

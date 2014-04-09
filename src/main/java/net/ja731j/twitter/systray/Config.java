@@ -3,12 +3,15 @@ package net.ja731j.twitter.systray;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.yaml.snakeyaml.Yaml;
+import twitter4j.auth.AccessToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -39,7 +42,6 @@ public class Config {
 
         Map<String, String> accessMap;
         Map<String, String> consumerMap;
-        
 
         try {
             accessMap = (Map<String, String>) yaml.load(new FileInputStream(settings));
@@ -76,5 +78,22 @@ public class Config {
             instance = new Config();
         }
         return instance.config;
+    }
+
+    public static void updateConfiguraiton(AccessToken token) {
+        Map<String, String> accessMap = new HashMap<>();
+        accessMap.put("accessToken", token.getToken());
+        accessMap.put("accessTokenSecret", token.getTokenSecret());
+
+        Yaml yaml = new Yaml();
+        try {
+            yaml.dump(accessMap,new FileWriter(new File(new File("."), "settings.yml")));
+        } catch (IOException ex) {
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
+        }
+        
+        instance = new Config();
+
     }
 }

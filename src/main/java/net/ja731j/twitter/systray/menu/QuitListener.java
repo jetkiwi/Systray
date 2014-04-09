@@ -14,7 +14,10 @@ public class QuitListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         SysTray.getInstance().quit();
-        Stream.getInstance().quit();
+        Stream s = Stream.getInstance();
+        if(s!=null){
+            s.quit();
+        }
     }
     
 }
