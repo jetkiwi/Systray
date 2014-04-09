@@ -72,6 +72,7 @@ public class TweetWindow extends JFrame implements ExitEventListener{
 
     @Override
     public void onApplicationExit() {
+        SysTray.getInstance().removeExitListener(this);
         this.dispose();
     }
 

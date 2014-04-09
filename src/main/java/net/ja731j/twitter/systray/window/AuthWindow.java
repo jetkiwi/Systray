@@ -104,6 +104,7 @@ public class AuthWindow extends JFrame implements ActionListener,ExitEventListen
 
     @Override
     public void onApplicationExit() {
+        SysTray.getInstance().removeExitListener(this);
         this.dispose();
     }
 

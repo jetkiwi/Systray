@@ -91,6 +91,7 @@ public class PostWindow extends JFrame implements ActionListener,ExitEventListen
 
     @Override
     public void onApplicationExit() {
+        SysTray.getInstance().removeExitListener(this);
         this.dispose();
     }
 
