@@ -29,7 +29,7 @@ public class TweetWindow extends javax.swing.JFrame implements ExitEventListener
         this.status = status;
         initComponents();
         sourceLabel.setText(status.getUser().getScreenName());
-        contentLabel.setText(status.getText());
+        contentArea.setText(status.getText());
     }
 
     /**
@@ -42,17 +42,16 @@ public class TweetWindow extends javax.swing.JFrame implements ExitEventListener
     private void initComponents() {
 
         sourceLabel = new javax.swing.JLabel();
-        contentLabel = new javax.swing.JLabel();
         replyButton = new javax.swing.JButton();
         retweetButton = new javax.swing.JButton();
         favoriteButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        contentArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Displaying tweet");
 
         sourceLabel.setFont(sourceLabel.getFont().deriveFont(sourceLabel.getFont().getSize()+2f));
-
-        contentLabel.setFont(contentLabel.getFont().deriveFont(contentLabel.getFont().getSize()+2f));
 
         replyButton.setText("Reply");
         replyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,31 +74,40 @@ public class TweetWindow extends javax.swing.JFrame implements ExitEventListener
             }
         });
 
+        contentArea.setEditable(false);
+        contentArea.setBackground(javax.swing.UIManager.getDefaults().getColor("Panel.background"));
+        contentArea.setColumns(20);
+        contentArea.setFont(new java.awt.Font("MS UI Gothic", 0, 14)); // NOI18N
+        contentArea.setLineWrap(true);
+        contentArea.setRows(5);
+        jScrollPane1.setViewportView(contentArea);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sourceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(contentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(sourceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(replyButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(retweetButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(favoriteButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(favoriteButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sourceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(replyButton)
                     .addComponent(retweetButton)
@@ -137,8 +145,9 @@ public class TweetWindow extends javax.swing.JFrame implements ExitEventListener
     }//GEN-LAST:event_replyButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel contentLabel;
+    private javax.swing.JTextArea contentArea;
     private javax.swing.JButton favoriteButton;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton replyButton;
     private javax.swing.JButton retweetButton;
     private javax.swing.JLabel sourceLabel;

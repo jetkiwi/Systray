@@ -52,6 +52,8 @@ public class PostWindow extends javax.swing.JFrame implements ExitEventListener 
         message.setText("Must have text");
 
         area.setColumns(20);
+        area.setFont(new java.awt.Font("MS UI Gothic", 0, 14)); // NOI18N
+        area.setLineWrap(true);
         area.setRows(5);
         jScrollPane1.setViewportView(area);
 
